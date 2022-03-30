@@ -11,6 +11,8 @@ import com.algaworks.algamoney.api.service.PessoaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +43,9 @@ public class LancamentoResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<Lancamento>> pesquisar(LancamentoFilter lancamentoFilter) {
-        List<Lancamento> lancamentos = lancamentoService.filtrar(lancamentoFilter);
-        return ResponseEntity.ok().body(lancamentos);
+    public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
+        Page<Lancamento> lancamentos = lancamentoService.filtrar(lancamentoFilter, pageable);
+        return lancamentos;
     }
 
     @GetMapping(value = "/{codigo}")
